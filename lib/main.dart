@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
@@ -8,6 +10,8 @@ void main() {
 const String imageUrl = "https://i.imgur.com/{0}.png";
 const String studentName = "Carolynne";
 
+final Random random = new Random();
+
 Map imagesUris = {};
 
 enum ImageType { user }
@@ -15,14 +19,20 @@ enum ImageType { user }
 String getImageUrl(ImageType type) =>
     imageUrl.replaceAll("{0}", imagesUris[type.toString()]);
 
+int generateNumberBySize(int size) {
+  var numero = "";
+
+  for (var i = 0; i < size; i++) numero += random.nextInt(9).toString();
+
+  return int.parse(numero);
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AP1',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primaryColor: Colors.white),
       home: MyHomePage(title: 'AP1'),
     );
   }
@@ -129,13 +139,105 @@ class _MyHomePageState extends State<MyHomePage> {
                 ListView(padding: EdgeInsets.zero, children: _createMenu())));
   }
 
+  List<Widget> _createSubjectsCards() {
+    List<Widget> cards = [];
+
+    var colors = [Colors.pink, Colors.orange, Colors.green, Colors.cyan];
+
+    var subjectsNames = [
+      "Banco de Dados",
+      "Programação Orientada a Objetos",
+      "Redes de Computador",
+      "Desenvolvimento de Sistema Móveis"
+    ];
+
+    for (int i = 0; i < subjectsNames.length; i++) {
+      cards.add(Padding(
+          padding: EdgeInsets.all(15),
+          child: Container(
+              decoration: BoxDecoration(
+                  color: colors[i][300],
+                  borderRadius: BorderRadius.all(Radius.circular(3))),
+              child: Padding(
+                  padding: EdgeInsets.only(top: 40),
+                  child: Column(children: [
+                    ListTile(
+                        tileColor: colors[i][300],
+                        hoverColor: colors[i][400],
+                        title: Text(subjectsNames[i],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
+                        subtitle: Text(
+                            'Turma: ${generateNumberBySize(4)}-B - ${generateNumberBySize(2)}N - Graduação',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 10))),
+                    Container(
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: Padding(
+                            padding: EdgeInsets.all(25),
+                            child: Center(
+                                child: Column(children: [
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                        child: Icon(Icons.star,
+                                            color: Colors.grey[
+                                                (i % 2 == 0) ? 300 : 600]),
+                                        padding:
+                                            EdgeInsets.only(left: 8, right: 8)),
+                                    Padding(
+                                        child: Icon(Icons.chat_bubble,
+                                            color: Colors.grey[300]),
+                                        padding:
+                                            EdgeInsets.only(left: 8, right: 8)),
+                                    Padding(
+                                        child: Icon(Icons.info,
+                                            color: Colors.grey[
+                                                (random.nextInt(10) > 5)
+                                                    ? 300
+                                                    : 600]),
+                                        padding:
+                                            EdgeInsets.only(left: 8, right: 8))
+                                  ]),
+                              Padding(
+                                  padding: EdgeInsets.only(top: 15),
+                                  child: SizedBox(
+                                      height: 40,
+                                      width: double.infinity,
+                                      child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.green[800],
+                                              onPrimary: Colors.white),
+                                          child: Padding(
+                                              child: Text('Entrar na sala'),
+                                              padding: EdgeInsets.only(
+                                                  left: 20, right: 20)))))
+                            ]))))
+                  ])))));
+    }
+
+    return cards;
+  }
+
   @override
   Widget build(BuildContext context) {
     _initializeImageMap();
 
     return Scaffold(
         appBar: AppBar(title: Text("Me passa, pfv!")),
-        body: Center(child: Text('My Page!')),
+        body: Center(
+            child: Padding(
+                padding: EdgeInsets.only(top: 90),
+                child: GridView.count(
+                    primary: false,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    crossAxisCount: 3,
+                    padding: const EdgeInsets.all(20),
+                    children: _createSubjectsCards()))),
         drawer: _createSidebar());
   }
 }
