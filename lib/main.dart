@@ -85,6 +85,34 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget _createDrawerOptions() {
+    return Container(
+      color: Colors.black54,
+      child: ListTile(
+        title: Text('Item 1', style: TextStyle(color: Colors.white)),
+        leading: Icon(Icons.border_all_rounded, color: Colors.white,),
+        selected: true,
+        selectedTileColor: Colors.black45,
+        hoverColor: Colors.black38,
+        onTap: () {
+          Navigator.pop(context);
+        },
+      )
+    );
+  }
+
+  Widget _createSidebar() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          _createDrawerHeader(),
+          _createDrawerOptions()
+        ],
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     _initializeImageMap();
@@ -92,23 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(title: Text("Me passa, pfv!")),
       body: Center(child: Text('My Page!')),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            _createDrawerHeader(),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            )
-          ],
-        ),
-      ),
+      drawer: _createSidebar()
     );
   }
 }
