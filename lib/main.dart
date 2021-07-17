@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Colors.black54,
       child: ListTile(
         title: Text('Item 1', style: TextStyle(color: Colors.white)),
-        leading: Icon(Icons.border_all_rounded, color: Colors.white,),
+        leading: Icon(Icons.border_all_rounded, color: Colors.white),
         selected: true,
         selectedTileColor: Colors.black45,
         hoverColor: Colors.black38,
