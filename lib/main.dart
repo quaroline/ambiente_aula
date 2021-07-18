@@ -162,8 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.only(top: 40),
                   child: Column(children: [
                     ListTile(
-                        tileColor: colors[i][300],
-                        hoverColor: colors[i][400],
                         title: Text(subjectsNames[i],
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -204,7 +202,6 @@ class _MyHomePageState extends State<MyHomePage> {
                               Padding(
                                   padding: EdgeInsets.only(top: 15),
                                   child: SizedBox(
-                                      height: 40,
                                       width: double.infinity,
                                       child: ElevatedButton(
                                           onPressed: () {},
@@ -227,16 +224,19 @@ class _MyHomePageState extends State<MyHomePage> {
     _initializeImageMap();
 
     return Scaffold(
-        appBar: AppBar(title: Text("Me passa, pfv!")),
+        appBar: AppBar(
+            toolbarHeight: 70,
+            title: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: Icon(Icons.exit_to_app, color: Colors.black))
+            ])),
         body: Center(
-            child: Padding(
-                padding: EdgeInsets.only(top: 90),
+            child: Container(
                 child: GridView.count(
                     primary: false,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
                     crossAxisCount: 3,
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(10),
                     children: _createSubjectsCards()))),
         drawer: _createSidebar());
   }
